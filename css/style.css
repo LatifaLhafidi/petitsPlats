@@ -1,0 +1,529 @@
+* {
+    margin: 0%;
+    padding: 0%;
+  }
+  header {
+    width: 100%;
+    height: 500px;
+    display: flex;  
+    flex-direction: column;
+    background-image: url("../images/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png"); 
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  body {
+    background: #ededed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  h1 {
+    color: var(--Yellow, #ffd15b);
+    text-align: center;
+    font-family: Anton;
+    font-size: 44px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .formHeader {
+    position: relative;
+    width: 80%;
+    display: flex;
+    height: 72px;
+    border-radius: 11px;
+    background: #fff;
+    margin-left: 50px;
+  }
+  
+  .searchButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 51px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--Black, #1b1b1b);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--Black, #1b1b1b);
+    padding-top: 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  .formHeader .fas {
+    font-size: 25px;
+  }
+  
+  i {
+    text-align: center;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo {
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-bottom: 100px;
+  }
+  .recipes-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+    margin-top: 10px;
+    object-fit: cover;
+  }
+  .recipes-cards article {
+    width: 380px;
+    height: 760px;
+    margin-bottom: 30px;
+    background-color: #fff;
+    border-radius: 21px 21px 0 0;
+    background: #fff;
+    box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+    margin-top: 60px;
+    position: relative;
+  }
+  .recipes-cards article img {
+    width: 100%;
+    height: 253px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 21px 21px 0 0;
+  }
+  
+  .recettes {
+    color: var(--Black, #1b1b1b);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  
+  .faHeader {
+    font-size: 40px;
+  }
+  main {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ededed;
+  }
+  .recipes-cards article h2 {
+    color: #000;
+    font-family: Anton;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  .ingredients {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    color: var(--Black, #1b1b1b);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 0px;
+  }
+  h3 {
+    color: var(--Black, #1b1b1b);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+  }
+  .ingredients p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+  .dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: flex-start;
+    margin-left: 20px;
+  }
+  .dropdown form {
+    margin: 0%;
+    padding: 0%;
+    background-color: #fff;
+  }
+  
+  .dropdown-content {
+    display: inline-flex;
+    padding: 17px 18px;
+    align-items: center;
+    gap: 60px;
+    background-color: #fff;
+    }
+  .inputDropdown {
+  
+    margin: 0%;
+  }
+  .seachChoix {
+    border-radius: 0%;
+  }
+  .dropdown form {
+    border-radius: 0%;
+  }
+  #select {
+    background-color: #fff;
+    width: 163px;
+    border-radius: 11px 11px;
+    margin-top: 25px;
+  }
+  .chevron {
+    font-size: 12px;
+    margin-left: -30px;
+  
+    transition: transform 0.2s ease;
+  }
+  
+  
+  .dropdown-content {
+    display: none;
+  }
+  .rotate {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease; /* Animation de la rotation */
+  }
+  .fas {
+    border: none;
+    text-decoration: none;
+  }
+  .fas::before {
+    border: none;
+  }
+  .time {
+    color: var(--Black, #1b1b1b);
+    text-align: center;
+    font-family: Manrope;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 14px;
+    background: var(--Yellow, #ffd15b);
+    width: 35px;
+    height: 16px;
+    padding: 5px 15px;
+    top: 14px;
+    right: 14px;
+    position: absolute;
+  }
+  .dropdown li {
+    color: var(--Black, #1b1b1b);
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    list-style-type: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding: 2px;
+  }
+  .dropdown {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: flex-start;
+    position: relative;
+    width: 195px; /* Ajoutez cette ligne pour que le dropdown soit relatif à son conteneur */
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute; /* Ajoutez cette ligne pour que le dropdown soit en position absolue */
+    z-index: 1; /* Ajoutez cette ligne pour s'assurer que le dropdown est affiché au-dessus du contenu */
+    background-color: #fff;
+    max-width: 100%;
+    border-radius: 11px;
+    margin-top: 38px;
+  }
+  
+  li:hover {
+    background-color: #ffd15b;
+  }
+  
+  .selected-ingredients-container ul li {
+    color: black;
+    background-color: #ffd15b;
+  }
+  .selected-ustensiles-container ul li {
+    color: black;
+    background-color: #ffd15b;
+  }
+  .selected-appareils-container ul li {
+    color: black;
+    background-color: #ffd15b;
+  }
+  .formDrop {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .clear-input-icon {
+    margin-left: -40px;
+    font-size: 15px;
+    margin-top: 4px;
+    font-weight: 200;
+  }
+  .dropdown .fas {
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 0%;
+  }
+  .dropdown button {
+    border: none;
+    background-color: #fff;
+  }
+  .dropdown .fa-search {
+    background: none;
+  }
+  
+  .formDrop {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .inputDropdown {
+    width: 100%;
+  }
+  
+  .clear-input-icon,
+  .searchChoix {
+    position: absolute;
+    top: 44%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .clear-input-icon {
+    right: 30px; /* Ajustez la position de l'icône de suppression */
+    top: 10px;
+  }
+  
+  .searchChoix {
+    right: 0;
+    padding: 0px;
+  }
+  .recipesCounter {
+    color: var(--Black, #1b1b1b);
+    font-family: Anton;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 180px;
+  }
+  
+  .selected-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+    background: #ffd15b;
+    margin-top: 3px;
+    position: static;
+    border-radius: 10px;
+    background: #ffd15b;
+    display: inline-flex;
+    padding: 17px 18px;
+    align-items: center;
+    gap: 60px;
+    color: #000;
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 167px;
+    height: 19px;
+  }
+  
+  .remove-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .remove-button:hover {
+    color: red; /* Couleur au survol, ajustez selon vos préférences */
+  }
+  
+  .dropdown {
+    position: relative;
+    /* Vos styles pour le dropdown */
+   width: 195px;
+    border-radius: 11px;
+    color: var(--Black, #1b1b1b);
+    font-family: Manrope;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  
+  .dropdown input {
+    margin-bottom: 5px;
+  }
+  .selectedItems {
+    width: 120px;
+  }
+  .dropdown-button {
+    color: var(--Black, #1b1b1b);
+    font-family: Manrope;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    display: inline-flex;
+    padding: 17px 16px;
+    align-items: center;
+    gap: 112px;
+    background: #fff;
+    border: nome;
+    border-radius: 11px;
+    border: none;
+    outline: none;
+    width: 195px;
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    justify-content: space-around;
+  }                                     
+  #clear-main-input-icon {
+    font-size: 14px;
+    color: #000;
+    margin: 25px;
+  }
+  .selected-item {
+    width: 195px;
+  }
+  
+  #clear-main-input-icon {
+    font-size: 14px;
+    color: #000;
+    margin: 25px;
+    position: absolute;
+    right: 52px;
+  }
+  
+  .selected-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-radius: 10px;
+    background: #ffd15b;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-right: 5px;
+    position: static;
+    width: 190px;
+    color: #000;
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  
+  .choix {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 100px;
+    margin-top: 20px;
+    position: relative;
+    margin-bottom: 10px;
+    justify-content: space-around;
+  }
+  
+  #clear-main-input-icon {
+    font-size: 14px;
+    color: #000;
+    margin: 25px;
+  }
+  
+  .container_selected ul {
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+  }
+  .container_selected ul li {
+    margin: 5px;
+    width: 100%;
+    display: inline-flex;
+    padding: 17px 18px;
+    align-items: center;
+    gap: 60px;
+    border-radius: 10px;
+    background: #ffd15b;
+    color: #000;
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 170px;
+  }
+  .inputHeader {
+    border: none;
+    flex: 1;
+    margin-left: 20px;
+    color: var(--Grey, #7a7a7a);
+    font-family: Manrope;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    white-space: nowrap;
+    width: 170px;
+  }
+  .recipesCounter {
+    color: var(--Black, #1b1b1b);
+    font-family: Anton;
+    font-size: 21px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .selectedItems {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+  }
+  .selected-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
