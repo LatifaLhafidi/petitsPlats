@@ -10,6 +10,8 @@
     background-image: url("../images/lampos-aritonang-24gR_9lCdes-unsplash\ 1.png"); 
     object-fit: cover;
     margin-bottom: 10px;
+    background-size: cover;
+  
   }
   body {
     background: #ededed;
@@ -100,16 +102,51 @@
     object-fit: cover;
     border-radius: 21px 21px 0 0;
   }
+  .time {
+    color: var(--Black, #1b1b1b);
+    text-align: center;
+    font-family: Manrope;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 14px;
+    background: var(--Yellow, #ffd15b);
+    width: 35px;
+    height: 16px;
+    padding: 5px 15px;
+    top: 14px;
+    right: 14px;
+    position: absolute;
+  }
+  h3 {
+    color: #7A7A7A;
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px; 
+    letter-spacing: 1.08px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
   
   .recettes {
     color: var(--Black, #1b1b1b);
     font-family: Manrope;
     font-size: 14px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     line-height: normal;
     margin-left: 20px;
     margin-right: 20px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 4; /* Nombre de lignes à afficher */
   }
   
   .faHeader {
@@ -145,17 +182,8 @@
     line-height: normal;
     margin-top: 0px;
   }
-  h3 {
-    color: var(--Black, #1b1b1b);
-    font-family: Manrope;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    margin-left: 20px;
-  }
+ 
+  
   .ingredients p {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -219,23 +247,7 @@
   .fas::before {
     border: none;
   }
-  .time {
-    color: var(--Black, #1b1b1b);
-    text-align: center;
-    font-family: Manrope;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    border-radius: 14px;
-    background: var(--Yellow, #ffd15b);
-    width: 35px;
-    height: 16px;
-    padding: 5px 15px;
-    top: 14px;
-    right: 14px;
-    position: absolute;
-  }
+ 
   .dropdown li {
     color: var(--Black, #1b1b1b);
     font-family: Manrope;

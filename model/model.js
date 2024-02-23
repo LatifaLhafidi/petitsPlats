@@ -41,7 +41,7 @@ class Model {
       a.localeCompare(b, undefined, { sensitivity: "base" })
     );
     const uniqueUstensiles = Array.from(ustensiles.values()).sort((a, b) =>
-      a.localeCompare(b, undefined, { sensitivity: "base" })
+      a.localeCompare(b, undefined, { sensitivity: "base"})
     );
 
     return {

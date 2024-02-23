@@ -19,9 +19,9 @@ class ListRecipesView {
             recipe.image
           }" alt="recette ${recipe.id}" />
           <h2>${recipe.name}</h2>
-          <h3>RECETTE</h3>
+          <h3> recettee </h3>
           <p class="recettes">${recipe.description}</p>
-          <h3>INGREDIENTS</h3>
+          <h3>ingredients</h3>
           <div class="ingredients">
             ${recipe.ingredients
               .map(

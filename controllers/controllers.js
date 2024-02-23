@@ -12,7 +12,7 @@ class Controller {
 
         // Mettez à jour la vue avec les informations nécessaires
     this.view.updateRecipesDisplay({ recipes, uniqueItems });
-    }
+    };
 } 
 // Instanciation de la vue, du modèle et du contrôleur
 const view = new ListRecipesView();
