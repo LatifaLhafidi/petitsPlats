@@ -127,6 +127,7 @@ class Controller {
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
       }
+          // Méthode pour normaliser les données de recette pour la recherche
       normalizeRecipeData(recipe) {
         const normalizedRecipe = {};
     
@@ -142,8 +143,65 @@ class Controller {
     
         return normalizedRecipe;
       }
-   
+      // Nouvelle méthode pour gérer le filtrage supplémentaire
+    handleAdditionalFiltering() {
+        // Utilisez les éléments sélectionnés pour filtrer les recettes
+        //Récupère les éléments sélectionnés (ingrédients, appareils, ustensiles).
+        const selectedIngredients = this.view.getSelectedItems("ingredients");
+        const selectedAppareils = this.view.getSelectedItems("appareils");
+        const selectedUstensiles = this.view.getSelectedItems("ustensiles");
     
+        // Si des filtres de recherche sont appliqués, utilisez les recettes filtrées par la recherche principale
+        //Filtrage des recettes en fonction des éléments sélectionnés et des filtres de recherche principale.
+        const filteredRecipes =
+          controller.filteredBySearch.length > 0
+            ? controller.filteredBySearch
+            : this.filterRecipes(
+                selectedIngredients,
+                selectedAppareils,
+                selectedUstensiles
+              );
+    
+        // Mise à jour de l'affichage des recettes avec le résultat filtré
+        this.view.updateRecipesDisplay({ recipes: filteredRecipes });
+    
+        // Mettez à jour les listes déroulantes basées sur les recettes filtrées
+        this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
+      }
+            
+      // Utiliser les recettes filtrées au lieu de toutes les recettes
+      updateDropdownsBasedOnFilteredRecipes(allRecipes) {
+        //Reçoit en paramètre toutes les recettes filtrées.
+        // const allRecipes = this.filteredBySearch || [];
+        let uniqueItems = {};
+        // Extraire les ingrédients, appareils et ustensiles des recettes filtrées
+        uniqueItems["ingredients"] = Array.from(
+          new Set(
+            allRecipes.flatMap((recipe) =>
+              recipe.ingredients.map((ingredient) =>
+                ingredient.ingredient.toLowerCase()
+              )
+            )
+          )
+        );
+    
+        uniqueItems["appareils"] = Array.from(
+          new Set(allRecipes.map((recipe) => recipe.appliance.toLowerCase()))
+        );
+    
+        uniqueItems["ustensiles"] = Array.from(
+          new Set(
+            allRecipes.flatMap((recipe) =>
+              recipe.ustensils.map((ustensil) => ustensil.toLowerCase())
+            )
+          )
+        );
+        //Met à jour les listes déroulantes dans l'interface utilisateur 
+        //en utilisant la méthode updateDropdowns de l'objet view.
+        this.view.updateDropdowns(uniqueItems, "ingredients");
+        this.view.updateDropdowns(uniqueItems, "appareils");
+        this.view.updateDropdowns(uniqueItems, "ustensiles");
+      } 
     
 } 
 // Instanciation de la vue, du modèle et du contrôleur
