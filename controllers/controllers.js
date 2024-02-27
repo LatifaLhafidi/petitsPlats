@@ -66,6 +66,34 @@ class Controller {
         // Retournez le tableau de recettes filtrées
         return filteredRecipes;
       }
+      // Nouvelle méthode pour mettre à jour l'affichage des recettes
+    updateRecipesDisplay(data) {
+        this.view.updateRecipesDisplay(data);
+      }
+      // Méthode pour gérer la recherche principale
+    handleSearch(query) {
+        const normalizedQuery = this.normalizeString(query);
+        console.log("Normalized Query:", normalizedQuery);
+    
+        // Filtrer les recettes en fonction de la requête
+        let filteredRecipes = this.filterRecipes(
+          this.view.getSelectedItems("ingredients"),
+          this.view.getSelectedItems("appareils"),
+          this.view.getSelectedItems("ustensiles")
+        );
+    
+        filteredRecipes = this.filterByText(filteredRecipes, normalizedQuery);
+    
+        // Mettre à jour la liste des recettes filtrées par la recherche principale
+        controller.filteredBySearch = filteredRecipes;
+    
+        // Mettre à jour l'affichage des recettes avec le résultat filtré
+        this.view.updateRecipesDisplay({ recipes: filteredRecipes });
+        console.log(filteredRecipes);
+    
+        this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
+      }
+    
     
 } 
 // Instanciation de la vue, du modèle et du contrôleur
