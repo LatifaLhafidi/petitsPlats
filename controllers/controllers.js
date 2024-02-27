@@ -127,13 +127,22 @@ class Controller {
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
       }
-       // Méthode pour normaliser une chaîne de caractères en minuscules sans accents
-    normalizeString(str) {
-        return str
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
+      normalizeRecipeData(recipe) {
+        const normalizedRecipe = {};
+    
+        normalizedRecipe.name = this.normalizeString(recipe.name);
+        normalizedRecipe.description = this.normalizeString(recipe.description);
+        normalizedRecipe.ingredients = recipe.ingredients.map((ingredient) =>
+          this.normalizeString(ingredient.ingredient)
+        );
+        normalizedRecipe.appliance = this.normalizeString(recipe.appliance);
+        normalizedRecipe.ustensils = recipe.ustensils.map((ustensil) =>
+          this.normalizeString(ustensil)
+        );
+    
+        return normalizedRecipe;
       }
+   
     
     
 } 
