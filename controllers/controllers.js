@@ -93,6 +93,40 @@ class Controller {
     
         this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
       }
+      //filtre les recettes en fonction d'une requête texte.
+    filterByText(filteredRecipes, query) {
+        // Utilisez le paramètre query ici au lieu de normalizedQuery
+        return filteredRecipes.filter((recipe) => {
+          const normalizedRecipeData = this.normalizeRecipeData(recipe);
+    
+          // Recherche dans le nom, la description et les ingrédients
+          const searchableText = (
+            normalizedRecipeData.name +
+            normalizedRecipeData.description +
+            normalizedRecipeData.ingredients
+              .map((ingredient) => ingredient.ingredient)
+              .join(" ")
+          )
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+    
+          return searchableText.includes(
+            query
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+          );
+        });
+      }
+    
+      // Méthode pour normaliser une chaîne de caractères en minuscules sans accents
+      normalizeString(str) {
+        return str
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+      }
     
     
 } 
