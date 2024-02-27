@@ -127,6 +127,13 @@ class Controller {
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
       }
+       // Méthode pour normaliser une chaîne de caractères en minuscules sans accents
+    normalizeString(str) {
+        return str
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "");
+      }
     
     
 } 
