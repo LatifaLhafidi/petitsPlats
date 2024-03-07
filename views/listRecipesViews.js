@@ -1,8 +1,6 @@
 class ListRecipesView {
   constructor() {
     // Sélection des éléments du DOM
-    this.inputHeader = document.querySelector(".inputHeader");
-    this.clearMainInputIcon = document.getElementById("clear-main-input-icon");
     this.searchButton = document.querySelector(".searchButton");
     this.searchButtonDropdowns = document.querySelectorAll(".searchChoix");
 
@@ -316,7 +314,7 @@ class ListRecipesView {
           <img src="assets/photos_les_petits_plats/${
             recipe.image
           }" alt="recette ${recipe.id}" />
-          <h2>${recipe.name}</h2>
+          <h2 class="name">${recipe.name}</h2>
           <h3>RECETTE</h3>
           <p class="recettes">${recipe.description}</p>
           <h3>INGREDIENTS</h3>
@@ -324,10 +322,15 @@ class ListRecipesView {
             ${recipe.ingredients
               .map(
                 (ingredient) => `
-              <p>${ingredient.ingredient}<br>
-              ${ingredient.quantity}${
+                <div class="ingredient">
+              <h2>${ingredient.ingredient}</h2> 
+              <h3>  ${ingredient.quantity}${
                   ingredient.unit ? ` ${formatUnit(ingredient.unit)}` : ""
-                }</p>`
+                }
+                </h3>
+                </div>
+              
+                `
               )
               .join("")}
           </div>
