@@ -324,10 +324,8 @@ class ListRecipesView {
                 (ingredient) => `
                 <div class="ingredient">
               <h2>${ingredient.ingredient}</h2> 
-              <h3>  ${ingredient.quantity}${
-                  ingredient.unit ? ` ${formatUnit(ingredient.unit)}` : ""
-                }
-                </h3>
+              <p> ${ingredient.quantity ? ingredient.quantity : ''} ${ingredient.unit ? ingredient.unit : '' }
+                </p>
                 </div>
               
                 `

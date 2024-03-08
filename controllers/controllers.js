@@ -65,82 +65,7 @@ class Controller {
       return filteredRecipes;
     }
   
-    // Méthode pour gérer la recherche principale
-    // handleSearch(query) {
-    //   const normalizedQuery = this.normalizeString(query);
-    //   console.log("Normalized Query:", normalizedQuery);
-  
-    //   // Filtrer les recettes en fonction de la requête
-    //   let filteredRecipes = this.filterRecipes(
-    //     this.view.getSelectedItems("ingredients"),
-    //     this.view.getSelectedItems("appareils"),
-    //     this.view.getSelectedItems("ustensiles")
-    //   );
-  
-    //   filteredRecipes = this.filterByText(filteredRecipes, normalizedQuery);
-  
-    //   // Mettre à jour la liste des recettes filtrées par la recherche principale
-    //   controller.filteredBySearch = filteredRecipes;
-  
-    //   // Mettre à jour l'affichage des recettes avec le résultat filtré
-    //   this.view.updateRecipesDisplay({ recipes: filteredRecipes });
-    //   console.log(filteredRecipes);
-  
-    //   this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
-    // }
-  
-    filterByText(filteredRecipes, query) {
-      // Utilisez le paramètre query ici au lieu de normalizedQuery
-      return filteredRecipes.filter((recipe) => {
-        const normalizedRecipeData = this.normalizeRecipeData(recipe);
-  
-        // Recherche dans le nom, la description et les ingrédients
-        const searchableText = (
-          normalizedRecipeData.name +
-          normalizedRecipeData.description +
-          normalizedRecipeData.ingredients
-            .map((ingredient) => ingredient.ingredient)
-            .join(" ")
-        )
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-  
-        return searchableText.includes(
-          query
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-        );
-      });
-    }
-  
-    // Méthode pour normaliser une chaîne de caractères en minuscules sans accents
-    normalizeString(str) {
-      return str
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "");
-    }
-  
-    // Méthode pour normaliser les données de recette pour la recherche
-    normalizeRecipeData(recipe) {
-      const normalizedRecipe = {};
-  
-      normalizedRecipe.name = this.normalizeString(recipe.name);
-      normalizedRecipe.description = this.normalizeString(recipe.description);
-      normalizedRecipe.ingredients = recipe.ingredients.map((ingredient) =>
-        this.normalizeString(ingredient.ingredient)
-      );
-      normalizedRecipe.appliance = this.normalizeString(recipe.appliance);
-      normalizedRecipe.ustensils = recipe.ustensils.map((ustensil) =>
-        this.normalizeString(ustensil)
-      );
-  
-      return normalizedRecipe;
-    }
-  
-    // Nouvelle méthode pour gérer le filtrage supplémentaire
+  // Nouvelle méthode pour gérer le filtrage supplémentaire
     handleAdditionalFiltering() {
       // Utilisez les éléments sélectionnés pour filtrer les recettes
       const selectedIngredients = this.view.getSelectedItems("ingredients");
@@ -178,7 +103,7 @@ class Controller {
           )
         )
       );
-  
+   
       uniqueItems["appareils"] = Array.from(
         new Set(allRecipes.map((recipe) => recipe.appliance.toLowerCase()))
       );
