@@ -21,14 +21,14 @@ class ListRecipesView {
       appareils: [],
       ustensiles: [],
     };
-    
+    // lancer la recherche lorsque l’utilisateur entre au moins 3 caractères
+     //dans la barre de recherche principale
     this.inputHeader.addEventListener("input", (e) => {
       const query = this.inputHeader.value;
       if (query.length >= 3) {
         controller.handleSearch(query);
       }
     });
-
     // // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
     this.inputHeader.addEventListener("input", () => {
       const inputValue = this.inputHeader.value.trim();
@@ -37,6 +37,26 @@ class ListRecipesView {
       } else {
         this.clearMainInputIcon.style.display = "block";
       }
+    });
+     // // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
+     this.inputHeader.addEventListener("input", () => {
+      const inputValue = this.inputHeader.value.trim();
+      if (inputValue === "") {
+        this.clearMainInputIcon.style.display = "none";
+      } else {
+        this.clearMainInputIcon.style.display = "block";
+      }
+    });
+     // Ajout d'un gestionnaire d'événements pour effacer le contenu de l'input principal
+     this.clearMainInputIcon.addEventListener("click", () => {
+      this.inputHeader.value = "";
+      this.clearMainInputIcon.style.display = "none";
+      // Déclencher une nouvelle recherche avec une chaîne vide
+      controller.handleSearch("");
+    });
+    // Ajout d'un gestionnaire d'événements pour masquer l'icône lors du chargement de la page
+    document.addEventListener("DOMContentLoaded", () => {
+      this.clearMainInputIcon.style.display = "none";
     });
    
    

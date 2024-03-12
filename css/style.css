@@ -286,18 +286,7 @@
     border: none;
   }
  
-  .dropdown li {
-    color: var(--Black, #1b1b1b);
-    font-family: Manrope;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    list-style-type: none;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding: 2px;
-  }
+  
   .dropdown {
     display: inline-flex;
     flex-direction: column;
@@ -391,16 +380,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px;
     border-radius: 10px;
     background: #ffd15b;
     margin-top: 3px;
     position: static;
     border-radius: 10px;
-    background: #ffd15b;
     display: inline-flex;
     padding: 17px 18px;
-    align-items: center;
     gap: 60px;
     color: #000;
     font-family: Manrope;
@@ -411,7 +397,25 @@
     width: 167px;
     height: 19px;
   }
+  .container_selected ul li {
+    margin: 5px;
+    width: 100%;
+    display: inline-flex;
+    padding: 17px 18px;
+    align-items: center;
+    gap: 60px;
+    border-radius: 10px;
+    background: #ffd15b;
+    color: #000;
+    font-family: Manrope;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 170px;
+  }
   
+
   .remove-button {
     background: none;
     border: none;
@@ -468,9 +472,7 @@
     color: #000;
     margin: 25px;
   }
-  .selected-item {
-    width: 195px;
-  }
+ 
   
   #clear-main-input-icon {
     font-size: 14px;
@@ -479,28 +481,7 @@
     position: absolute;
     right: 52px;
   }
-  
-  .selected-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-radius: 10px;
-    background: #ffd15b;
-    margin-top: 3px;
-    margin-bottom: 3px;
-    margin-right: 5px;
-    position: static;
-    width: 190px;
-    color: #000;
-    font-family: Manrope;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
- 
-  
+   
   .choix {
     display: flex;
     flex-direction: row;
@@ -524,23 +505,7 @@
     justify-content: left;
     flex-direction: row;
   }
-  .container_selected ul li {
-    margin: 5px;
-    width: 100%;
-    display: inline-flex;
-    padding: 17px 18px;
-    align-items: center;
-    gap: 60px;
-    border-radius: 10px;
-    background: #ffd15b;
-    color: #000;
-    font-family: Manrope;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    width: 170px;
-  }
+  
   .inputHeader {
     border: none;
     flex: 1;
