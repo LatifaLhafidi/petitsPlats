@@ -1,6 +1,8 @@
 class ListRecipesView {
   constructor() {
     // Sélection des éléments du DOM
+    this.inputHeader = document.querySelector(".inputHeader");
+    this.clearMainInputIcon = document.getElementById("clear-main-input-icon");
     this.searchButton = document.querySelector(".searchButton");
     this.searchButtonDropdowns = document.querySelectorAll(".searchChoix");
 
@@ -19,6 +21,23 @@ class ListRecipesView {
       appareils: [],
       ustensiles: [],
     };
+    
+    this.inputHeader.addEventListener("input", (e) => {
+      const query = this.inputHeader.value;
+      if (query.length >= 3) {
+        controller.handleSearch(query);
+      }
+    });
+
+    // // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
+    this.inputHeader.addEventListener("input", () => {
+      const inputValue = this.inputHeader.value.trim();
+      if (inputValue === "") {
+        this.clearMainInputIcon.style.display = "none";
+      } else {
+        this.clearMainInputIcon.style.display = "block";
+      }
+    });
    
    
     this.searchButtonDropdowns.forEach((button) => {

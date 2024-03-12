@@ -78,6 +78,36 @@ class Controller {
   updateRecipesDisplay(recipes) {
       this.view.updateRecipesDisplay({ recipes });
   }
+  handleSearch(query) {
+    const normalizedQuery = this.normalizeString(query);
+    console.log("Normalized Query:", normalizedQuery);
+
+    // Filtrer les recettes en fonction de la requête
+    let filteredRecipes = this.filterRecipes(
+      this.view.getSelectedItems("ingredients"),
+      this.view.getSelectedItems("appareils"),
+      this.view.getSelectedItems("ustensiles")
+    );
+
+    filteredRecipes = this.filterByText(filteredRecipes, normalizedQuery);
+
+    // Mettre à jour la liste des recettes filtrées par la recherche principale
+    controller.filteredBySearch = filteredRecipes;
+
+    // Mettre à jour l'affichage des recettes avec le résultat filtré
+    this.view.updateRecipesDisplay({ recipes: filteredRecipes });
+    console.log(filteredRecipes);
+
+    this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
+  }
+    // Méthode pour normaliser une chaîne de caractères en minuscules sans accents
+    //assure que la chaîne de caractères est uniforme en minuscules et sans espaces inutiles.
+    normalizeString(str) {
+      return str
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+    }
   // Nouvelle méthode pour gérer le filtrage supplémentaire
     handleAdditionalFiltering() {
       // Utilisez les éléments sélectionnés pour filtrer les recettes
