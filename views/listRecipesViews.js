@@ -103,10 +103,59 @@ class ListRecipesView {
  
 
   // Méthode pour obtenir les éléments sélectionnés d'un type donné
+  // sélectionne tous les éléments <span> qui sont des descendants des éléments ayant
+  // une classe correspondant à la valeur de type fournie
+  //Array.from(...): Convertit la NodeList renvoyée par document.querySelectorAll en un tableau
+  //trim() est  appliquée pour supprimer tout espace vide au début ou à la fin du contenu textuel.
   getSelectedItems(type) {
     return Array.from(document.querySelectorAll(`.${type} span`)).map((item) =>
       item.textContent.trim()
     );
+  }
+  updateSelectedItems() {
+    const selectedItemsContainer = document.querySelector(
+      ".selected-container"
+    );
+
+    if (selectedItemsContainer) {
+      // Effacement du contenu précédent
+      selectedItemsContainer.innerHTML = "";
+
+      // Création d'une nouvelle liste pour chaque type d'élément sélectionné
+      Object.keys(this.selectedItems).forEach((type) => {
+        const selectedItemsList = document.createElement("ul");
+
+        // Ajout des éléments sélectionnés à la liste
+        this.selectedItems[type].forEach((item) => {
+          const selectedItem = document.createElement("li");
+          selectedItem.classList.add("selected-item");
+          selectedItem.classList.add(type);
+
+          // Ajout d'un span pour le texte de l'élément sélectionné
+          const itemText = document.createElement("span");
+          itemText.textContent = item;
+
+          // Ajout d'un bouton de suppression à chaque élément
+          const removeButton = document.createElement("button");
+          removeButton.classList.add("remove-button");
+          removeButton.innerHTML = "&times;";
+          removeButton.addEventListener("click", () => {
+            // Gestion du clic sur le bouton de suppression
+            this.removeSelectedItem(type, item);
+          });
+
+          // Ajout du texte et du bouton à l'élément sélectionné
+          selectedItem.appendChild(itemText);
+          selectedItem.appendChild(removeButton);
+
+          // Ajout de l'élément à la liste
+          selectedItemsList.appendChild(selectedItem);
+        });
+
+        // Ajout de la liste au conteneur global
+        selectedItemsContainer.appendChild(selectedItemsList);
+      });
+    }
   }
 
   // Nouvelle méthode pour mettre à jour les listes déroulantes
@@ -163,51 +212,7 @@ class ListRecipesView {
     return item.replace(/\b\w/g, (match) => match.toUpperCase());
   }
 
-  updateSelectedItems() {
-    const selectedItemsContainer = document.querySelector(
-      ".selected-container"
-    );
-
-    if (selectedItemsContainer) {
-      // Effacement du contenu précédent
-      selectedItemsContainer.innerHTML = "";
-
-      // Création d'une nouvelle liste pour chaque type d'élément sélectionné
-      Object.keys(this.selectedItems).forEach((type) => {
-        const selectedItemsList = document.createElement("ul");
-
-        // Ajout des éléments sélectionnés à la liste
-        this.selectedItems[type].forEach((item) => {
-          const selectedItem = document.createElement("li");
-          selectedItem.classList.add("selected-item");
-          selectedItem.classList.add(type);
-
-          // Ajout d'un span pour le texte de l'élément sélectionné
-          const itemText = document.createElement("span");
-          itemText.textContent = item;
-
-          // Ajout d'un bouton de suppression à chaque élément
-          const removeButton = document.createElement("button");
-          removeButton.classList.add("remove-button");
-          removeButton.innerHTML = "&times;";
-          removeButton.addEventListener("click", () => {
-            // Gestion du clic sur le bouton de suppression
-            this.removeSelectedItem(type, item);
-          });
-
-          // Ajout du texte et du bouton à l'élément sélectionné
-          selectedItem.appendChild(itemText);
-          selectedItem.appendChild(removeButton);
-
-          // Ajout de l'élément à la liste
-          selectedItemsList.appendChild(selectedItem);
-        });
-
-        // Ajout de la liste au conteneur global
-        selectedItemsContainer.appendChild(selectedItemsList);
-      });
-    }
-  }
+ 
 
   handleFilteredSelection(type, selectedItem) {
     // Ajoutez l'élément à la liste des éléments sélectionnés pour le type spécifié
