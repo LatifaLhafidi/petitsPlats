@@ -16,55 +16,68 @@ class Controller {
       this.view.updateRecipesDisplay({ recipes, uniqueItems });
     }
 
-  
     filterRecipes(selectedIngredients, selectedAppareils, selectedUstensiles) {
-      // Obtenez toutes les recettes du modèle
       const allRecipes = this.model.getRecipes();
-  
-      // Filtrez les recettes en fonction des sélections
-      const filteredRecipes = allRecipes.filter((recipe) => {
-        // Vérifiez les ingrédients
-        const hasSelectedIngredients =
-          selectedIngredients.length === 0 ||
-          selectedIngredients.every((ingredient) =>
-            recipe.ingredients.some((recipeIngredient) =>
-              recipeIngredient.ingredient
-                .toLowerCase()
-                .includes(ingredient.toLowerCase())
-            )
-          );
-  
-        // Vérifiez les appareils
-        const hasSelectedAppareils =
-          selectedAppareils.length === 0 ||
-          selectedAppareils.every((appareil) =>
-            recipe.appliance.toLowerCase().includes(appareil.toLowerCase())
-          );
-  
-        // Vérifiez les ustensiles
-        const hasSelectedUstensiles =
-          selectedUstensiles.length === 0 ||
-          selectedUstensiles.every((ustensile) =>
-            recipe.ustensils.some((recipeUstensile) =>
-              recipeUstensile.toLowerCase().includes(ustensile.toLowerCase())
-            )
-          );
-  
-        // Retournez true si la recette correspond à toutes les sélections
-        return (
-          hasSelectedIngredients && hasSelectedAppareils && hasSelectedUstensiles
-        );
-      });
-  
-      // Mettre à jour l'affichage des recettes avec le résultat filtré
-      this.view.updateRecipesDisplay({ recipes: filteredRecipes });
-  
+      const filteredRecipes = this.filterByIngredients(allRecipes, selectedIngredients)
+                              .filterByAppareils(selectedAppareils)
+                              .filterByUstensiles(selectedUstensiles)
+                              .getFilteredRecipes();
+      
+      this.updateRecipesDisplay(filteredRecipes);
       this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
-  
-      // Retournez le tableau de recettes filtrées
+      
       return filteredRecipes;
-    }
+  }
   
+  filterByIngredients(recipes, selectedIngredients) {
+      return {
+          recipes: recipes.filter(recipe =>
+              selectedIngredients.length === 0 ||
+              selectedIngredients.every(ingredient =>
+                  recipe.ingredients.some(recipeIngredient =>
+                      recipeIngredient.ingredient.toLowerCase().includes(ingredient.toLowerCase())
+                  )
+              )
+          ),
+          filterByAppareils: this.filterByAppareils,
+          filterByUstensiles: this.filterByUstensiles,
+          getFilteredRecipes: this.getFilteredRecipes
+      };
+  }
+  
+  filterByAppareils(selectedAppareils) {
+      return {
+          ...this,
+          recipes: this.recipes.filter(recipe =>
+              selectedAppareils.length === 0 ||
+              selectedAppareils.every(appareil =>
+                  recipe.appliance.toLowerCase().includes(appareil.toLowerCase())
+              )
+          )
+      };
+  }
+  
+  filterByUstensiles(selectedUstensiles) {
+      return {
+          ...this,
+          recipes: this.recipes.filter(recipe =>
+              selectedUstensiles.length === 0 ||
+              selectedUstensiles.every(ustensile =>
+                  recipe.ustensils.some(recipeUstensile =>
+                      recipeUstensile.toLowerCase().includes(ustensile.toLowerCase())
+                  )
+              )
+          )
+      };
+  }
+  
+  getFilteredRecipes() {
+      return this.recipes;
+  }
+  
+  updateRecipesDisplay(recipes) {
+      this.view.updateRecipesDisplay({ recipes });
+  }
   // Nouvelle méthode pour gérer le filtrage supplémentaire
     handleAdditionalFiltering() {
       // Utilisez les éléments sélectionnés pour filtrer les recettes
