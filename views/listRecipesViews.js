@@ -99,9 +99,6 @@ class ListRecipesView {
     });
   }
 
-
- 
-
   // Méthode pour obtenir les éléments sélectionnés d'un type donné
   // sélectionne tous les éléments <span> qui sont des descendants des éléments ayant
   // une classe correspondant à la valeur de type fournie
@@ -158,7 +155,7 @@ class ListRecipesView {
     }
   }
 
-  // Nouvelle méthode pour mettre à jour les listes déroulantes
+  // méthode pour mettre à jour les listes déroulantes
   updateDropdowns(uniqueItems, type) {
     const listElement = document.getElementById(`${type}-list`);
     const selectedItemsContainer = document.getElementById(`selected-${type}`);

@@ -15,7 +15,7 @@ class Controller {
       // Mettez à jour la vue avec les informations nécessaires
       this.view.updateRecipesDisplay({ recipes, uniqueItems });
     }
-
+// filtrer une liste de recettes en fonction des ingrédients, appareils et ustensiles sélectionnés par l'utilisateur
     filterRecipes(selectedIngredients, selectedAppareils, selectedUstensiles) {
       const allRecipes = this.model.getRecipes();
       const filteredRecipes = this.filterByIngredients(allRecipes, selectedIngredients)
@@ -78,6 +78,63 @@ class Controller {
   updateRecipesDisplay(recipes) {
       this.view.updateRecipesDisplay({ recipes });
   }
+
+  // la méthode pour gérer le filtrage supplémentaire
+  handleAdditionalFiltering() {
+    // Utilisez les éléments sélectionnés pour filtrer les recettes
+    const selectedIngredients = this.view.getSelectedItems("ingredients");
+    const selectedAppareils = this.view.getSelectedItems("appareils");
+    const selectedUstensiles = this.view.getSelectedItems("ustensiles");
+
+    // Si des filtres de recherche sont appliqués, utilisez les recettes filtrées par la recherche principale
+    const filteredRecipes =
+      controller.filteredBySearch.length > 0
+        ? controller.filteredBySearch
+        : this.filterRecipes(
+            selectedIngredients,
+            selectedAppareils,
+            selectedUstensiles
+          );
+
+    // Mise à jour de l'affichage des recettes avec le résultat filtré
+    this.view.updateRecipesDisplay({ recipes: filteredRecipes });
+
+    // Mettez à jour les listes déroulantes basées sur les recettes filtrées
+    this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
+  }
+
+  updateDropdownsBasedOnFilteredRecipes(allRecipes) {
+    // Utiliser les recettes filtrées au lieu de toutes les recettes
+    // const allRecipes = this.filteredBySearch || [];
+    let uniqueItems = {};
+    // Extraire les ingrédients, appareils et ustensiles des recettes filtrées
+    uniqueItems["ingredients"] = Array.from(
+      new Set(
+        allRecipes.flatMap((recipe) =>
+          recipe.ingredients.map((ingredient) =>
+            ingredient.ingredient.toLowerCase()
+          )
+        )
+      )
+    );
+ 
+    uniqueItems["appareils"] = Array.from(
+      new Set(allRecipes.map((recipe) => recipe.appliance.toLowerCase()))
+    );
+
+    uniqueItems["ustensiles"] = Array.from(
+      new Set(
+        allRecipes.flatMap((recipe) =>
+          recipe.ustensils.map((ustensil) => ustensil.toLowerCase())
+        )
+      )
+    );
+    this.view.updateDropdowns(uniqueItems, "ingredients");
+    this.view.updateDropdowns(uniqueItems, "appareils");
+    this.view.updateDropdowns(uniqueItems, "ustensiles");
+  }
+  
+  //méthode pour faire la recherche principale 
   handleSearch(query) {
     const normalizedQuery = this.normalizeString(query);
     console.log("Normalized Query:", normalizedQuery);
@@ -154,60 +211,7 @@ class Controller {
     return normalizedRecipe;
   }
   
-  // // Nouvelle méthode pour gérer le filtrage supplémentaire
-  //   handleAdditionalFiltering() {
-  //     // Utilisez les éléments sélectionnés pour filtrer les recettes
-  //     const selectedIngredients = this.view.getSelectedItems("ingredients");
-  //     const selectedAppareils = this.view.getSelectedItems("appareils");
-  //     const selectedUstensiles = this.view.getSelectedItems("ustensiles");
   
-  //     // Si des filtres de recherche sont appliqués, utilisez les recettes filtrées par la recherche principale
-  //     const filteredRecipes =
-  //       controller.filteredBySearch.length > 0
-  //         ? controller.filteredBySearch
-  //         : this.filterRecipes(
-  //             selectedIngredients,
-  //             selectedAppareils,
-  //             selectedUstensiles
-  //           );
-  
-  //     // Mise à jour de l'affichage des recettes avec le résultat filtré
-  //     this.view.updateRecipesDisplay({ recipes: filteredRecipes });
-  
-  //     // Mettez à jour les listes déroulantes basées sur les recettes filtrées
-  //     this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
-  //   }
-  
-    updateDropdownsBasedOnFilteredRecipes(allRecipes) {
-      // Utiliser les recettes filtrées au lieu de toutes les recettes
-      // const allRecipes = this.filteredBySearch || [];
-      let uniqueItems = {};
-      // Extraire les ingrédients, appareils et ustensiles des recettes filtrées
-      uniqueItems["ingredients"] = Array.from(
-        new Set(
-          allRecipes.flatMap((recipe) =>
-            recipe.ingredients.map((ingredient) =>
-              ingredient.ingredient.toLowerCase()
-            )
-          )
-        )
-      );
-   
-      uniqueItems["appareils"] = Array.from(
-        new Set(allRecipes.map((recipe) => recipe.appliance.toLowerCase()))
-      );
-  
-      uniqueItems["ustensiles"] = Array.from(
-        new Set(
-          allRecipes.flatMap((recipe) =>
-            recipe.ustensils.map((ustensil) => ustensil.toLowerCase())
-          )
-        )
-      );
-      this.view.updateDropdowns(uniqueItems, "ingredients");
-      this.view.updateDropdowns(uniqueItems, "appareils");
-      this.view.updateDropdowns(uniqueItems, "ustensiles");
-    }
   }
   
   // Instanciation de la vue, du modèle et du contrôleur
