@@ -4,8 +4,6 @@ class ListRecipesView {
       this.inputHeader = document.querySelector(".inputHeader");
       this.clearMainInputIcon = document.getElementById("clear-main-input-icon");
       this.searchButton = document.querySelector(".searchButton");
-      this.searchButtonDropdowns = document.querySelectorAll(".searchChoix");
-
       this.inputElements = document.querySelectorAll(".inputDropdown");
 
   
@@ -24,6 +22,8 @@ class ListRecipesView {
         appareils: [],
         ustensiles: [],
       };
+      //appeler la fonction addInputEventListeners qui fait la recherche par element 
+      this.addInputEventListeners();
       // lancer la recherche lorsque l’utilisateur entre au moins 3 caractères
        //dans la barre de recherche principale
       this.inputHeader.addEventListener("input", (e) => {
@@ -41,7 +41,7 @@ class ListRecipesView {
           this.clearMainInputIcon.style.display = "block";
         }
       });
-       // // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
+       // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
        this.inputHeader.addEventListener("input", () => {
         const inputValue = this.inputHeader.value.trim();
         if (inputValue === "") {
@@ -62,45 +62,10 @@ class ListRecipesView {
         this.clearMainInputIcon.style.display = "none";
       });
      
+
      
-      this.inputElements.forEach((button) => {
-        button.addEventListener("click", (e) => {
-          e.preventDefault();
-  
-          // Utilisation des éléments sélectionnés dans les dropdowns pour filtrer les recettes
-          const selectedIngredients = this.getSelectedItems("ingredients");
-          const selectedAppareils = this.getSelectedItems("appareils");
-          const selectedUstensiles = this.getSelectedItems("ustensiles");
-  
-          // Filtrage des recettes en fonction des éléments sélectionnés
-          const filteredRecipes = controller.filterRecipes(
-            selectedIngredients,
-            selectedAppareils,
-            selectedUstensiles
-          );
-  
-          // Si des filtres de recherche sont appliqués, effectuez l'intersection
-          let finalFilteredRecipes;
-  
-          if (controller.filteredBySearch.length > 0) {
-            finalFilteredRecipes = controller.filteredBySearch.filter(
-              (recipeBySearch) =>
-                filteredRecipes.some((recipe) => recipe.id === recipeBySearch.id)
-            );
-          } else {
-            // Sinon, utilisez les recettes filtrées directement
-            finalFilteredRecipes = filteredRecipes;
-          }
-  
-          // Mise à jour de l'affichage des recettes avec le résultat filtré
-          // Utilisez directement updateRecipesDisplay, pas this.view.updateRecipesDisplay
-          this.updateRecipesDisplay({ recipes: finalFilteredRecipes });
-        });
-  
-        // Appel de la fonction pour ajouter les gestionnaires d'événements aux inputs
-        this.addInputEventListeners();
-      });
     }
+    
   
     // Méthode pour obtenir les éléments sélectionnés d'un type donné
     // sélectionne tous les éléments <span> qui sont des descendants des éléments ayant
@@ -251,17 +216,14 @@ class ListRecipesView {
     }
   
     addInputEventListeners() {
-      const inputElements = document.querySelectorAll(".inputDropdown");
-  
+       const inputElements = document.querySelectorAll(".inputDropdown");
       inputElements.forEach((input) => {
         const clearInputIcon = input.nextElementSibling; // Sélectionnez la croix
-  
         // Masquez la croix lors de l'initialisation
         clearInputIcon.style.display = "none";
   
         input.addEventListener("input", (event) => {
           event.preventDefault();
-  
           const type = input.getAttribute("name");
           const value = event.target.value.toLowerCase();
           const listElement = document.getElementById(`${type}-list`);
@@ -389,10 +351,8 @@ class ListRecipesView {
       const recipesCounter = document.querySelector(".recipesCounter");
       recipesCounter.textContent = `${count} recette${count !== 1 ? "s" : ""}`;
     }
-  
-   
+     
   }
-  
   // Méthode pour formater l'unité
   function formatUnit(unit) {
     if (unit === "grammes") {
