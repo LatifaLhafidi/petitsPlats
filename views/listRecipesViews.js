@@ -4,7 +4,6 @@ class ListRecipesView {
       this.inputHeader = document.querySelector(".inputHeader");
       this.clearMainInputIcon = document.getElementById("clear-main-input-icon");
       this.searchButton = document.querySelector(".searchButton");
-      this.inputElements = document.querySelectorAll(".inputDropdown");
 
   
       // Assurez-vous que la méthode updateRecipesDisplay est correctement liée à l'instance actuelle
@@ -64,7 +63,7 @@ class ListRecipesView {
      
 
      
-    }
+    } 
     
   
     // Méthode pour obtenir les éléments sélectionnés d'un type donné
@@ -126,7 +125,6 @@ class ListRecipesView {
     // méthode pour mettre à jour les listes déroulantes
     updateDropdowns(uniqueItems, type) {
       const listElement = document.getElementById(`${type}-list`);
-      const selectedItemsContainer = document.getElementById(`selected-${type}`);
   
       if (listElement) {
         // Mise à jour des options dans la liste déroulante
@@ -163,14 +161,7 @@ class ListRecipesView {
         });
       });
   
-      // Ajoutez ici le code pour gérer la soumission du formulaire
-      const formElement = document.querySelector(`[name="${type}"] form`);
-      if (formElement) {
-        formElement.addEventListener("submit", (event) => {
-          event.preventDefault();
-          this.handleFormSubmission(type);
-        });
-      }
+      
     }
   
     normalizeItem(item) {
@@ -216,94 +207,40 @@ class ListRecipesView {
     }
   
     addInputEventListeners() {
-       const inputElements = document.querySelectorAll(".inputDropdown");
+      const inputElements = document.querySelectorAll(".inputDropdown");
       inputElements.forEach((input) => {
-        const clearInputIcon = input.nextElementSibling; // Sélectionnez la croix
-        // Masquez la croix lors de l'initialisation
-        clearInputIcon.style.display = "none";
-  
-        input.addEventListener("input", (event) => {
-          event.preventDefault();
-          const type = input.getAttribute("name");
-          const value = event.target.value.toLowerCase();
-          const listElement = document.getElementById(`${type}-list`);
-  
-          // Affichez ou masquez la croix en fonction du contenu de l'input
-          if (value.trim() === "") {
-            clearInputIcon.style.display = "none";
-          } else {
-            clearInputIcon.style.display = "block";
-          }
-  
-          if (uniqueItems && uniqueItems[type]) {
-            const filteredOptions = uniqueItems[type].filter((item) =>
-              item.toLowerCase().includes(value)
-            );
-  
-            if (listElement) {
-              // Effacer les anciens gestionnaires d'événements
-              listElement.innerHTML = "";
-  
-              // Ajouter les nouveaux éléments avec les gestionnaires d'événements
-              filteredOptions.forEach((item) => {
-                const listItem = document.createElement("li");
-                listItem.textContent = item;
-                listItem.addEventListener("click", () => {
-                  this.handleFilteredSelection(type, item);
-                });
-  
-                listElement.appendChild(listItem);
-              });
-            }
-          }
-  
-          // Ajouter un gestionnaire d'événements pour le cas de désélection
-          const selectedItemsContainer = document.querySelector(
-            `.selected-container ul`
-          );
-  
-          if (selectedItemsContainer) {
-            selectedItemsContainer.addEventListener("click", (event) => {
-              const selectedItem = event.target.textContent.trim();
-              this.removeSelectedItem(type, selectedItem);
-            });
-          }
-  
-          // Ajoutez ici le code pour gérer la soumission du formulaire
-          const formElement = document.querySelector(`[name="${type}"] form`);
-          if (formElement) {
-            formElement.addEventListener("submit", (event) => {
-              event.preventDefault();
-              this.handleFormSubmission(type);
-            });
-          }
-        });
-  
-        // Ajoutez un événement pour effacer le contenu de l'input et masquer la croix
-        clearInputIcon.addEventListener("click", () => {
-          input.value = "";
+          const clearInputIcon = input.nextElementSibling;
           clearInputIcon.style.display = "none";
   
-          // Mettez à jour la liste lorsque la croix est cliquée et l'input est vidé
-          const type = input.getAttribute("name");
-          const listElement = document.getElementById(`${type}-list`);
-          const uniqueItemsList = uniqueItems[type];
+          const updateInput = () => {
+              const type = input.getAttribute("name");
+              const value = input.value.toLowerCase().trim();
+              clearInputIcon.style.display = value ? "block" : "none";
+              const listElement = document.getElementById(`${type}-list`);
   
-          if (listElement && uniqueItemsList) {
-            listElement.innerHTML = "";
-            uniqueItemsList.forEach((item) => {
-              const listItem = document.createElement("li");
-              listItem.textContent = item;
-              listItem.addEventListener("click", () => {
-                this.handleFilteredSelection(type, item);
-              });
+              if (uniqueItems && uniqueItems[type]) {
+                  const filteredOptions = uniqueItems[type].filter((item) => item.toLowerCase().includes(value));
   
-              listElement.appendChild(listItem);
-            });
-          }
-        });
+                  if (listElement) {
+                      listElement.innerHTML = "";
+                      filteredOptions.forEach((item) => {
+                          const listItem = document.createElement("li");
+                          listItem.textContent = item;
+                          listItem.addEventListener("click", () => this.handleFilteredSelection(type, item));
+                          listElement.appendChild(listItem);
+                      });
+                  }
+              }
+          };
+  
+          input.addEventListener("input", updateInput);
+  
+          clearInputIcon.addEventListener("click", () => {
+              input.value = "";
+              updateInput();
+          });
       });
-    }
+  }
   
     // Méthode pour mettre à jour l'abnffichage des recettes
     updateRecipesDisplay(data) {
@@ -330,7 +267,8 @@ class ListRecipesView {
                   (ingredient) => `
                   <div class="ingredient">
                 <h2>${ingredient.ingredient}</h2> 
-                <p> ${ingredient.quantity ? ingredient.quantity : ''} ${ingredient.unit ? ingredient.unit : '' }
+                <p> ${ingredient.quantity ? ingredient.quantity : ''}
+                 ${ingredient.unit ? ` ${formatUnit(ingredient.unit)}`: '' }
                   </p>
                   </div>
                 

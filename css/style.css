@@ -309,19 +309,7 @@
   li:hover {
     background-color: #ffd15b;
   }
-  
-  .selected-ingredients-container ul li {
-    color: black;
-    background-color: #ffd15b;
-  }
-  .selected-ustensiles-container ul li {
-    color: black;
-    background-color: #ffd15b;
-  }
-  .selected-appareils-container ul li {
-    color: black;
-    background-color: #ffd15b;
-  }
+
   .formDrop {
     display: flex;
     flex-direction: row;
@@ -349,8 +337,7 @@
   
   
   
-  .clear-input-icon,
-  .searchChoix {
+  .clear-input-icon{
     position: absolute;
     top: 44%;
     transform: translateY(-50%);
@@ -362,10 +349,6 @@
     top: 10px;
   }
   
-  .searchChoix {
-    right: 0;
-    padding: 0px;
-  }
   .recipesCounter {
     color: var(--Black, #1b1b1b);
     font-family: Anton;
