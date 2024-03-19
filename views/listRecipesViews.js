@@ -21,8 +21,7 @@ class ListRecipesView {
         appareils: [],
         ustensiles: [],
       };
-      //appeler la fonction addInputEventListeners qui fait la recherche par element 
-      this.addInputEventListeners();
+    
       // lancer la recherche lorsque l’utilisateur entre au moins 3 caractères
        //dans la barre de recherche principale
       this.inputHeader.addEventListener("input", (e) => {
@@ -61,20 +60,75 @@ class ListRecipesView {
         this.clearMainInputIcon.style.display = "none";
       });
      
-
+  //appeler la fonction addInputEventListeners qui fait la recherche par tag 
+  this.addInputEventListeners();
      
     } 
     
-  
     // Méthode pour obtenir les éléments sélectionnés d'un type donné
     // sélectionne tous les éléments <span> qui sont des descendants des éléments ayant
     // une classe correspondant à la valeur de type fournie
     //Array.from(...): Convertit la NodeList renvoyée par document.querySelectorAll en un tableau
     //trim() est  appliquée pour supprimer tout espace vide au début ou à la fin du contenu textuel.
-    getSelectedItems(type) {
-      return Array.from(document.querySelectorAll(`.${type} span`)).map((item) =>
-        item.textContent.trim()
-      );
+   
+    addInputEventListeners() {
+      const inputElements = document.querySelectorAll(".inputDropdown");
+      inputElements.forEach((input) => {
+          const clearInputIcon = input.nextElementSibling;
+          clearInputIcon.style.display = "none";
+  
+          const updateInput = () => {
+              const type = input.getAttribute("name");
+              // la valeur saisée 
+              const value = input.value.toLowerCase().trim();
+              // Affichez ou masquez la croix en fonction du contenu de l'input (value)
+                 clearInputIcon.style.display = value ? "block" : "none";
+              // la liste ul 
+              const listElement = document.getElementById(`${type}-list`);
+  
+              if (uniqueItems && uniqueItems[type]) {
+                // seuls les éléments qui incluent la valeur recherchée, value, 
+                    //seront conservés dans le tableau filteredOptions.
+                  const filteredOptions = uniqueItems[type].filter((item) => item.toLowerCase().includes(value));
+  
+                  if (listElement) {
+                      // Effacer les anciens gestionnaires d'événements
+                      // actualiser la liste des élements de dropdwn 
+                      listElement.innerHTML = "";
+                      filteredOptions.forEach((item) => {
+                          const listItem = document.createElement("li");
+                          listItem.textContent = item;
+                          listItem.addEventListener("click", () => this.handleFilteredSelection(type, item));
+                          listElement.appendChild(listItem);
+                      });
+                  }
+              }
+          };
+     // Le input événement se déclenche lorsque le value de l'élément a été modifié 
+          input.addEventListener("input", updateInput);
+
+           // Mettez à jour la liste lorsque la croix est cliquée et l'input est vidé
+          clearInputIcon.addEventListener("click", () => {
+              input.value = "";
+              updateInput();
+          });
+      });
+  }
+
+    handleFilteredSelection(type, selectedItem) {
+
+      // Ajoutez l'élément à la liste des éléments sélectionnés pour le type spécifié
+       this.selectedItems[type].push(selectedItem);
+       
+      // Mise à jour de l'affichage des éléments sélectionnés
+       this.updateSelectedItems(type);
+  
+      // Mise à jour de la liste déroulante après la suppression d'un élément
+        this.updateDropdowns(uniqueItems, type);
+       // Appel de la méthode du contrôleur pour gérer le filtrage supplémentaire
+       controller.handleAdditionalFiltering(); 
+
+  
     }
     updateSelectedItems() {
       const selectedItemsContainer = document.querySelector(
@@ -128,23 +182,23 @@ class ListRecipesView {
   
       if (listElement) {
         // Mise à jour des options dans la liste déroulante
-        listElement.innerHTML = uniqueItems[type]
-          ? uniqueItems[type]
-              .map((item) => `<li>${this.normalizeItem(item)}</li>`)
+        listElement.innerHTML = uniqueItems[type] ? uniqueItems[type].map((item) => `<li>${this.normalizeItem(item)}</li>`)
               .join("")
           : "";
       }
   
       const dropdownItems = document.querySelectorAll(`#${type}-list li`);
       dropdownItems.forEach((item) => {
+        //Pour chaque élément de la liste déroulante, un gestionnaire d'événements
+        // mousedown est ajouté. Cela signifie que la sélection de l'élément se produit lorsque 
+       // l'utilisateur clique dessus avec le bouton de la souris.
         item.addEventListener("mousedown", () => {
           // Vérification si l'élément est déjà sélectionné
           const isSelected = this.selectedItems[type].includes(item.textContent);
           if (!isSelected) {
             // Ajout de l'élément à la liste des éléments sélectionnés
             this.selectedItems[type].push(item.textContent);
-  
-            // Suppression de l'élément de la liste d'origine
+          // Suppression de l'élément de la liste d'origine
             const originalIndex = uniqueItems[type].indexOf(item.textContent);
             if (originalIndex !== -1) {
               uniqueItems[type].splice(originalIndex, 1);
@@ -153,7 +207,7 @@ class ListRecipesView {
             this.updateSelectedItems(type);
   
             // Mise à jour de la liste déroulante après la suppression d'un élément
-            this.updateDropdowns(uniqueItems, type);
+             this.updateDropdowns(uniqueItems, type);
   
             // Appel de la méthode du contrôleur pour gérer le filtrage supplémentaire
             controller.handleAdditionalFiltering(); // Assurez-vous que "controller" est bien défini
@@ -166,22 +220,6 @@ class ListRecipesView {
   
     normalizeItem(item) {
       return item.replace(/\b\w/g, (match) => match.toUpperCase());
-    }
-  
-   
-  
-    handleFilteredSelection(type, selectedItem) {
-      // Ajoutez l'élément à la liste des éléments sélectionnés pour le type spécifié
-      this.selectedItems[type].push(selectedItem);
-  
-      // Mise à jour de l'affichage des éléments sélectionnés
-      this.updateSelectedItems(type);
-  
-      // Mise à jour de la liste déroulante après la suppression d'un élément
-      this.updateDropdowns(uniqueItems, type);
-  
-      // Appel de la méthode du contrôleur pour gérer le filtrage supplémentaire
-      controller.handleAdditionalFiltering(); // Assurez-vous que "controller" est bien défini
     }
   
     // Méthode pour supprimer un élément sélectionné
@@ -205,42 +243,14 @@ class ListRecipesView {
         controller.handleAdditionalFiltering(); // Assurez-vous que "controller" est bien défini
       }
     }
+    getSelectedItems(type) {
+      // return Array.from(document.querySelectorAll(`.${type} span`)).map((item) =>
+      //   item.textContent.trim()
+      // );
+      return this.selectedItems[type]
+    }
   
-    addInputEventListeners() {
-      const inputElements = document.querySelectorAll(".inputDropdown");
-      inputElements.forEach((input) => {
-          const clearInputIcon = input.nextElementSibling;
-          clearInputIcon.style.display = "none";
-  
-          const updateInput = () => {
-              const type = input.getAttribute("name");
-              const value = input.value.toLowerCase().trim();
-              clearInputIcon.style.display = value ? "block" : "none";
-              const listElement = document.getElementById(`${type}-list`);
-  
-              if (uniqueItems && uniqueItems[type]) {
-                  const filteredOptions = uniqueItems[type].filter((item) => item.toLowerCase().includes(value));
-  
-                  if (listElement) {
-                      listElement.innerHTML = "";
-                      filteredOptions.forEach((item) => {
-                          const listItem = document.createElement("li");
-                          listItem.textContent = item;
-                          listItem.addEventListener("click", () => this.handleFilteredSelection(type, item));
-                          listElement.appendChild(listItem);
-                      });
-                  }
-              }
-          };
-  
-          input.addEventListener("input", updateInput);
-  
-          clearInputIcon.addEventListener("click", () => {
-              input.value = "";
-              updateInput();
-          });
-      });
-  }
+   
   
     // Méthode pour mettre à jour l'abnffichage des recettes
     updateRecipesDisplay(data) {
