@@ -169,31 +169,61 @@ class Controller {
     }
     //filteredRecipes (la liste de recettes à filtrer) et query (le terme de recherche).
 
-    filterByText(filteredRecipes, query) {
-      // Utilisez le paramètre query ici au lieu de normalizedQuery
-      return filteredRecipes.filter((recipe) => {
-        const normalizedRecipeData = this.normalizeRecipeData(recipe);
+    // filterByText(filteredRecipes, query) {
+    //   // Utilisez le paramètre query ici au lieu de normalizedQuery
+    //   return filteredRecipes.filter((recipe) => {
+    //     const normalizedRecipeData = this.normalizeRecipeData(recipe);
   
-        // Recherche dans le nom, la description et les ingrédients
+    //     // Recherche dans le nom, la description et les ingrédients
+    //     const searchableText = (
+    //       normalizedRecipeData.name +
+    //       normalizedRecipeData.description +
+    //       normalizedRecipeData.ingredients
+    //         .map((ingredient) => ingredient.ingredient)
+    //         .join(" ")
+    //     )
+    //       .toLowerCase()
+    //       .normalize("NFD")
+    //       .replace(/[\u0300-\u036f]/g, "");
+  
+    //     return searchableText.includes(
+    //       query
+    //         .toLowerCase()
+    //         .normalize("NFD")
+    //         .replace(/[\u0300-\u036f]/g, "")
+    //     );
+    //   });
+    // }
+    filterByText(filteredRecipes, query) {
+      const filteredResults = [];
+      let i = 0;
+      
+      while (i < filteredRecipes.length) {
+        const recipe = filteredRecipes[i];
+        const normalizedRecipeData = this.normalizeRecipeData(recipe);
+    
         const searchableText = (
           normalizedRecipeData.name +
           normalizedRecipeData.description +
           normalizedRecipeData.ingredients
-            .map((ingredient) => ingredient.ingredient)
+            .map(ingredient => ingredient.ingredient)
             .join(" ")
         )
           .toLowerCase()
           .normalize("NFD")
           .replace(/[\u0300-\u036f]/g, "");
-  
-        return searchableText.includes(
-          query
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-        );
-      });
+    
+        if (searchableText.includes(query.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))) {
+          filteredResults.push(recipe);
+        }
+        
+        i++;
+      }
+      
+      return filteredResults;
     }
+    
+
      // Méthode pour normaliser les données de recette pour la recherche
   normalizeRecipeData(recipe) {
     const normalizedRecipe = {};
