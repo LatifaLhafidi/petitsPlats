@@ -139,7 +139,7 @@ class Controller {
     const normalizedQuery = this.normalizeString(query);
     console.log("Normalized Query:", normalizedQuery);
 
-    // Filtrer les recettes en fonction de la requête 
+    // Filtrer les recettes en fonction de la requête
     //Les recettes sont filtrées en fonction de ces sélections.
     let filteredRecipes = this.filterRecipes(
       this.view.getSelectedItems("ingredients"),

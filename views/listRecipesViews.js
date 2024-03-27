@@ -30,15 +30,7 @@ class ListRecipesView {
           controller.handleSearch(query);
         }
       });
-      // // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
-      this.inputHeader.addEventListener("input", () => {
-        const inputValue = this.inputHeader.value.trim();
-        if (inputValue === "") {
-          this.clearMainInputIcon.style.display = "none";
-        } else {
-          this.clearMainInputIcon.style.display = "block";
-        }
-      });
+      
        // Ajout d'un gestionnaire d'événements pour masquer/afficher l'icône en fonction du contenu de l'input
        this.inputHeader.addEventListener("input", () => {
         const inputValue = this.inputHeader.value.trim();

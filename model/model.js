@@ -1,4 +1,4 @@
-class Model {
+class Model{
   constructor(recipes) {
     this.recipes = recipes;
   }
