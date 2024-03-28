@@ -197,17 +197,20 @@ class Controller {
     filterByText(filteredRecipes, query) {
       const filteredResults = [];
       let i = 0;
-      
+    
       while (i < filteredRecipes.length) {
         const recipe = filteredRecipes[i];
         const normalizedRecipeData = this.normalizeRecipeData(recipe);
     
+        let searchableIngredients = "";
+        for (let j = 0; j < normalizedRecipeData.ingredients.length; j++) {
+          searchableIngredients += normalizedRecipeData.ingredients[j].ingredient + " ";
+        }
+    
         const searchableText = (
           normalizedRecipeData.name +
           normalizedRecipeData.description +
-          normalizedRecipeData.ingredients
-            .map(ingredient => ingredient.ingredient)
-            .join(" ")
+          searchableIngredients
         )
           .toLowerCase()
           .normalize("NFD")
@@ -222,9 +225,9 @@ class Controller {
       
       return filteredResults;
     }
+                                         
     
-
-     // Méthode pour normaliser les données de recette pour la recherche
+   // Méthode pour normaliser les données de recette pour la recherche
   normalizeRecipeData(recipe) {
     const normalizedRecipe = {};
 
