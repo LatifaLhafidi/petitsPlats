@@ -139,7 +139,6 @@ class Controller {
     const normalizedQuery = this.normalizeString(query);
     console.log("Normalized Query:", normalizedQuery);
 
-    // Filtrer les recettes en fonction de la requête
     //Les recettes sont filtrées en fonction de ces sélections.
     let filteredRecipes = this.filterRecipes(
       this.view.getSelectedItems("ingredients"),
@@ -147,7 +146,7 @@ class Controller {
       this.view.getSelectedItems("ustensiles")
     );
 
-    filteredRecipes = this.filterByText(filteredRecipes, normalizedQuery);
+    filteredRecipes = this.searchByText(filteredRecipes, normalizedQuery);
 
     // Mettre à jour la liste des recettes filtrées par la recherche principale
     controller.filteredBySearch = filteredRecipes;
@@ -169,7 +168,7 @@ class Controller {
     }
     //filteredRecipes (la liste de recettes à filtrer) et query (le terme de recherche).
 
-    filterByText(filteredRecipes, query) {
+    searchByText(filteredRecipes, query) {
       // Utilisez le paramètre query ici au lieu de normalizedQuery
       return filteredRecipes.filter((recipe) => {
         const normalizedRecipeData = this.normalizeRecipeData(recipe);
