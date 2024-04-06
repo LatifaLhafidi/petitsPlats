@@ -166,43 +166,28 @@ handleSearch(query) {
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
   }
-  // filteredRecipes (la liste de recettes à filtrer) et searchValue (le terme de recherche).
-  // la version fonctionnelle 
-  searchByText(filtredRecipes,searchValue) {
-    // Utilisez le paramètre query ici au lieu de normalizedQuery
-    return filtredRecipes.filter((recipe) => {
-      let recipeNameIncluded = recipe.name.toLowerCase().includes(searchValue);
-      let descriptionIncluded = recipe.description.toLowerCase().includes(searchValue);
-      let appliancesIncluded = recipe.appliance.toLowerCase().includes(searchValue);
-      let utensilsIncluded = recipe.ustensils.includes(searchValue);
-      let ingredientsIncluded = recipe.ingredients.some((ingredient) =>
-        ingredient.ingredient.toLowerCase().includes(searchValue) 
-      );
-      return ingredientsIncluded || recipeNameIncluded || descriptionIncluded || appliancesIncluded || utensilsIncluded;
-    });
-  
-  }
+ 
   // version native 
-//  searchByText(filteredRecipes, searchValue) {
-//     let results = [];
+ searchByText(filteredRecipes, searchValue) {
+    let results = [];
 
-//     for (let i = 0; i < filteredRecipes.length; i++) {
-//         let recipe = filteredRecipes[i];
-//         let recipeNameIncluded = recipe.name.toLowerCase().includes(searchValue);
-//         let descriptionIncluded = recipe.description.toLowerCase().includes(searchValue);
-//         let appliancesIncluded = recipe.appliance.toLowerCase().includes(searchValue);
-//         let utensilsIncluded = recipe.ustensils.includes(searchValue);
-//         let ingredientsIncluded = recipe.ingredients.some((ingredient) =>
-//             ingredient.ingredient.toLowerCase().includes(searchValue)
-//         );
+    for (let i = 0; i < filteredRecipes.length; i++) {
+        let recipe = filteredRecipes[i];
+        let recipeNameIncluded = recipe.name.toLowerCase().includes(searchValue);
+        let descriptionIncluded = recipe.description.toLowerCase().includes(searchValue);
+        let appliancesIncluded = recipe.appliance.toLowerCase().includes(searchValue);
+        let utensilsIncluded = recipe.ustensils.includes(searchValue);
+        let ingredientsIncluded = recipe.ingredients.some((ingredient) =>
+            ingredient.ingredient.toLowerCase().includes(searchValue)
+        );
 
-//         if (ingredientsIncluded || recipeNameIncluded || descriptionIncluded || appliancesIncluded || utensilsIncluded) {
-//             results.push(recipe);
-//         }
-//     }
+        if (ingredientsIncluded || recipeNameIncluded || descriptionIncluded || appliancesIncluded || utensilsIncluded) {
+            results.push(recipe);
+        }
+    }
 
-//     return results;
-// }
+    return results;
+}
 
    // Méthode pour normaliser les données de recette pour la recherche
 normalizeRecipeData(recipe) {
