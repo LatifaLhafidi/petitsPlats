@@ -168,49 +168,23 @@ class Controller {
     }
     //filteredRecipes (la liste de recettes à filtrer) et query (le terme de recherche).
 
-    searchByText(filteredRecipes, query) {
-      // Utilisez le paramètre query ici au lieu de normalizedQuery
-      return filteredRecipes.filter((recipe) => {
-        const normalizedRecipeData = this.normalizeRecipeData(recipe);
+    // filteredRecipes (la liste de recettes à filtrer) et searchValue (le terme de recherche).
+  // la version fonctionnelle 
+  searchByText(filtredRecipes,searchValue) {
+    // Utilisez le paramètre query ici au lieu de normalizedQuery
+    return filtredRecipes.filter((recipe) => {
+      let recipeNameIncluded = recipe.name.toLowerCase().includes(searchValue);
+      let descriptionIncluded = recipe.description.toLowerCase().includes(searchValue);
+      let appliancesIncluded = recipe.appliance.toLowerCase().includes(searchValue);
+      let utensilsIncluded = recipe.ustensils.includes(searchValue);
+      let ingredientsIncluded = recipe.ingredients.some((ingredient) =>
+        ingredient.ingredient.toLowerCase().includes(searchValue) 
+      );
+      return ingredientsIncluded || recipeNameIncluded || descriptionIncluded || appliancesIncluded || utensilsIncluded;
+    });
   
-        // Recherche dans le nom, la description et les ingrédients
-        const searchableText = (
-          normalizedRecipeData.name +
-          normalizedRecipeData.description +
-          normalizedRecipeData.ingredients
-            .map((ingredient) => ingredient.ingredient)
-            .join(" ")
-        )
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "");
-  
-        return searchableText.includes(
-          query
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-        );
-      });
-    }
-     // Méthode pour normaliser les données de recette pour la recherche
-  normalizeRecipeData(recipe) {
-    const normalizedRecipe = {};
-
-    normalizedRecipe.name = this.normalizeString(recipe.name);
-    normalizedRecipe.description = this.normalizeString(recipe.description);
-    normalizedRecipe.ingredients = recipe.ingredients.map((ingredient) =>
-      this.normalizeString(ingredient.ingredient)
-    );
-    normalizedRecipe.appliance = this.normalizeString(recipe.appliance);
-    normalizedRecipe.ustensils = recipe.ustensils.map((ustensil) =>
-      this.normalizeString(ustensil)
-    );
-
-    return normalizedRecipe;
   }
-  
-  
+   
   }
   
   // Instanciation de la vue, du modèle et du contrôleur
