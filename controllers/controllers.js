@@ -189,24 +189,6 @@ handleSearch(query) {
     return results;
 }
 
-   // Méthode pour normaliser les données de recette pour la recherche
-normalizeRecipeData(recipe) {
-  const normalizedRecipe = {};
-
-  normalizedRecipe.name = this.normalizeString(recipe.name);
-  normalizedRecipe.description = this.normalizeString(recipe.description);
-  normalizedRecipe.ingredients = recipe.ingredients.map((ingredient) =>
-    this.normalizeString(ingredient.ingredient)
-  );
-  normalizedRecipe.appliance = this.normalizeString(recipe.appliance);
-  normalizedRecipe.ustensils = recipe.ustensils.map((ustensil) =>
-    this.normalizeString(ustensil)
-  );
-
-  return normalizedRecipe;
-}
-
-
 }
 
 // Instanciation de la vue, du modèle et du contrôleur
