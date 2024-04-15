@@ -177,9 +177,14 @@ handleSearch(query) {
         let descriptionIncluded = recipe.description.toLowerCase().includes(searchValue);
         let appliancesIncluded = recipe.appliance.toLowerCase().includes(searchValue);
         let utensilsIncluded = recipe.ustensils.includes(searchValue);
-        let ingredientsIncluded = recipe.ingredients.some((ingredient) =>
-            ingredient.ingredient.toLowerCase().includes(searchValue)
-        );
+
+        let ingredientsIncluded = false;
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+            if (recipe.ingredients[j].ingredient.toLowerCase().includes(searchValue)) {
+                ingredientsIncluded = true;
+                break;
+            }
+        }
 
         if (ingredientsIncluded || recipeNameIncluded || descriptionIncluded || appliancesIncluded || utensilsIncluded) {
             results.push(recipe);
@@ -188,6 +193,8 @@ handleSearch(query) {
 
     return results;
 }
+
+
 
 }
 
