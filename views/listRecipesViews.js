@@ -78,10 +78,10 @@ class ListRecipesView {
               // la liste ul 
               const listElement = document.getElementById(`${type}-list`);
   
-              if (uniqueItems && uniqueItems[type]) {
+              if (this.uniqueItems && this.uniqueItems[type]) {
                 // seuls les éléments qui incluent la valeur recherchée, value, 
                     //seront conservés dans le tableau filteredOptions.
-                  const filteredOptions = uniqueItems[type].filter((item) => item.toLowerCase().includes(value));
+                  const filteredOptions = this.uniqueItems[type].filter((item) => item.toLowerCase().includes(value));
   
                   if (listElement) {
                       // Effacer les anciens gestionnaires d'événements
@@ -170,6 +170,7 @@ class ListRecipesView {
   
     // méthode pour mettre à jour les listes déroulantes
     updateDropdowns(uniqueItems, type) {
+      this.uniqueItems[type]=uniqueItems[type];
       const listElement = document.getElementById(`${type}-list`);
   
       if (listElement) {
