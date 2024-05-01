@@ -165,6 +165,7 @@ class Controller {
 
     //Mise à jour des menus déroulants :
     this.updateDropdownsBasedOnFilteredRecipes(filteredRecipes);
+   
   }
   // Méthode pour normaliser une chaîne de caractères en minuscules sans accents
   //assure que la chaîne de caractères est uniforme en minuscules et sans espaces inutiles.
